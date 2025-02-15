@@ -1,4 +1,35 @@
+# Nick Notes
+1. Create Command Parser
+    create database from urlqq:w
+    average age of all users per city
+    average number of friends per city
+    the user with the most friends per city
+    the most common first name in all cities
+    the most common hobby of all friends of users in all cities
+
+2. Create Json getter
+3. Create Json Parser
+4. Parse data and input into SQLite
+5. Using Database operations to select info and output in JSON format
 # Take-Home Coding Assignment
+ID NAME CITY AGE FREINDS(list)
+FRIENDS - NAME HOBBIES(list) 
+{"id":200000,
+"name":"Elijah",
+"city":"Orlando",
+"age":62,
+"friends":[{"name":"Camila","hobbies":["Martial Arts","Dancing"]},{"name":"Sarah","hobbies":["Running","Team Sports","Woodworking"]}]}
+
+
+
+{"id":200001,"name":"Charlotte","city":"New Orleans","age":72,"friends":[{"name":"Mia","hobbies":["Painti
+ng","Movie Watching","Socializing"]},{"name":"Grace","hobbies":["Skiing & Snowboarding","Yoga"]},{"name":
+"Oliver","hobbies":["Genealogy","Music","Fishing"]}]}
+{"id":200002,"name":"Daniel","city":"Miami Beach","age":71,"friends":[{"name":"Emma","hobbies":["Painting","Team Sports","Video Games"]},{"name":"Chris","hobbies":["Music","Housework"]}]}
+{"id":200003,"name":"Elijah","city":"Los Angeles","age":63,"friends":[{"name":"Sophie","hobbies":["Yoga","Golf"]},{"name":"Elijah","hobbies":["Gardening","Dancing","Quilting"]}]}
+{"id":200004,"name":"Sophie","city":"Savannah","age":66,"friends":[{"name":"Michelle","hobbies":["Music","Gardening","Calligraphy"]},{"name":"Mateo","hobbies":["Movie Watching","Running"]},{"name":"Zoey","hobbies":["Genealogy","Housework"]},{"name":"Jack","hobbies":["Music","Volunteer Work","Writing"]},{"name":"Emma","hobbies":["Socializing","Bicycling"]}]}
+
+
 
 ## JSON REST client
 

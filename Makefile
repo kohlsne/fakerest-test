@@ -1,10 +1,15 @@
-all:
-	rm *~
-	cat README.md | md-to-pdf > BrightSign-coding-test.pdf
+CXX = g++
 
+all: my_program
 
-# install tool from https://github.com/simonhaenisch/md-to-pdf
-install-tools:
-	npm i -g md-to-pdf
+my_program: main.o client.o
+	$(CXX) main.o client.o -o prog
 
+main.o: main.cpp
+	$(CXX) -c main.cpp
 
+client.o: client.cpp
+	$(CXX) -c client.cpp
+
+clean:
+	rm -f prog *.o
