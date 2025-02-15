@@ -1,9 +1,9 @@
-CXX = g++
+CXX = g++ -std=c++23
 
 all: my_program
 
 my_program: main.o client.o
-	$(CXX) main.o client.o -o prog
+	$(CXX) client.o main.o -o prog
 
 main.o: main.cpp
 	$(CXX) -c main.cpp

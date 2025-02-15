@@ -1,6 +1,5 @@
 #include <iostream>
 #include <unistd.h> // getopt - parsing
-#include "sqlite3.h" //embedded database
 #include "client.h" // custom class
 #include <string>
 #include "external/httplib.h"
@@ -47,7 +46,9 @@ int main(int argc, char *argv[]) {
     }
 	std::cout << "Endpoint: " << endpoint << std::endl;
     Client client(endpoint);
-    std::string responseBody = client.getJSON(); //maybe add endpoint to here?
-    std::cout << responseBody;
+    std::string responseBody = client.getJSON(); 
+    client.parseJSON(responseBody);
+  //  client.hello();
+    client.getAveAgePerCty();
     return 0;
 }
