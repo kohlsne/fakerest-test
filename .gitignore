@@ -1,0 +1,14 @@
+# Compiled binaries
+*.o
+*.exe
+*.dll
+
+# Temporary files
+*~
+.swp
+
+# IDE files
+.vscode/
+
+# Log files
+*.log
