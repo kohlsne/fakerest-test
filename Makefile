@@ -2,6 +2,9 @@ CXX = g++ -std=c++23
 
 all: my_program
 
+test: unitTest/test.cpp
+	$(CXX) unitTest/test.cpp -o unitTest/test
+
 my_program: main.o restclient.o
 	$(CXX) restclient.o main.o -o prog
 

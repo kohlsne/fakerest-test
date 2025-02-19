@@ -29,7 +29,7 @@ std::string RestClient::getJson()
 	}
 	else
 	{
-		std::cout << "Invalid Endpoint\n";
+		throw std::runtime_error( "Invalid Endpoint\n");
 	}
 	return responseBody;
 }
@@ -44,7 +44,7 @@ void RestClient::parseJson(const std::string &responseBody)
 	for (unsigned int i = 0; i < 20; i++)
 	{
 		std::getline(ss, line);
-		std::cout << line << std::endl << std::endl;
+		//std::cout << line << std::endl << std::endl;
 		nlohmann::json j_user;
 		try{
 			j_user = nlohmann::json::parse(line);
@@ -111,7 +111,7 @@ std::string RestClient::getAveAgePerCty()
 	for (const auto &cityData : mapCityData)
 	{
 		float averageAge = static_cast<float>(cityData.second.ageSum) / cityData.second.numOfUsers;
-		std::cout << std::fixed << std::setprecision(2) << "Average Age: " << averageAge << std::endl;
+		//std::cout << std::fixed << std::setprecision(2) << "Average Age: " << averageAge << std::endl;
 		j_answer.push_back({"city", cityData.first, "average age", averageAge});
 	}
 	return j_answer.dump();
@@ -122,7 +122,7 @@ std::string RestClient::getAveNumOfFriendsPerCty()
 	for (const auto &cityData : mapCityData)
 	{
 		float averageNumFriends = static_cast<float>(cityData.second.friendsSum) / cityData.second.numOfUsers;
-		std::cout << std::fixed << std::setprecision(2) << "Average Friend: " << averageNumFriends << std::endl;
+		//std::cout << std::fixed << std::setprecision(2) << "Average Friend: " << averageNumFriends << std::endl;
 		j_answer.push_back({"city", cityData.first, "average num friends", averageNumFriends});
 	}
 	return j_answer.dump();

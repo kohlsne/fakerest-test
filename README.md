@@ -44,9 +44,19 @@ https://github.com/nlohmann/json
 - JSON objects
 - JSON parser
 
-### other considerations
+### Considerations
+- No need to reinvent the wheel. I opted out of using a custom parser and object to injest the JSON
 - Calculations could be simplified using SQL commands with the embedded database SQLite, but REST is stateless and the endpoint needs to be queried  everytime
 
+## JSON Objects
+The user object contains:
+- id
+- name
+- city
+- age
+- list of friends
+    - name
+    - list of hobbies
 ## Security
 
 ## Assumptions

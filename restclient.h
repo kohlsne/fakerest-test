@@ -1,5 +1,5 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#ifndef REST_CLIENT_H
+#define REST_CLIENT_H
 
 #include <string>
 #include <iostream>
@@ -27,7 +27,7 @@ class RestClient{
 			unsigned int friendsSum = 0;
 		    unsigned int friendsMax = 0;
 			unsigned int idWithMostFriends = 0;
-		    std::string userWithMostFriends;
+		    std::string userWithMostFriends = "";
 	    };
 
 
