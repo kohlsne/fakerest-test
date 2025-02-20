@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream> 
 #include <stdexcept>
+
 RestClient::RestClient() : endpoint("http://test.brightsign.io:3000"){};
 RestClient::RestClient(const std::string &endpoint) : endpoint(endpoint){};
 RestClient::~RestClient(){}

@@ -1,6 +1,6 @@
 CXX = g++ -std=c++23
 
-all: my_program
+all: my_program test
 
 my_program: main.o restclient.o
 	$(CXX) restclient.o main.o -o prog
@@ -18,4 +18,4 @@ restclient.o: restclient.cpp
 	$(CXX) -c restclient.cpp
 
 clean:
-	rm -f prog *.o
+	rm -f prog test *.o
