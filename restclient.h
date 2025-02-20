@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <vector>
 
-
+//Specifies the Query
 enum class Query { 
 	NO_QUERY,
 	AVE_AGE_PER_CTY, 
@@ -19,8 +19,7 @@ enum class Query {
 class RestClient{
 	private:
 	    std::string endpoint;
-		bool verbosity;
-
+		//updated as json is parsed line by line
 	    struct CityData{
 		    unsigned int ageSum = 0;
 		    unsigned int numOfUsers = 0;
@@ -29,49 +28,29 @@ class RestClient{
 			unsigned int idWithMostFriends = 0;
 		    std::string userWithMostFriends = "";
 	    };
-
-
-
-	    struct JsonObject{
-			struct FriendObject{
-				std::string name;
-				std::vector<std::string> hobbies;
- 	    	};
-		    unsigned int id = 0;
-			unsigned int age = 0;
-			std::string name;
-			std::string city;
-			std::vector<FriendObject> friends;
-	    };
-
+		//contains aggregate of data by city
 	    std::unordered_map<std::string,struct CityData> mapCityData;
+		//contains frequency of first name
 	    std::unordered_map<std::string,int> mapFirstName;
+		//contains frquency of hobbies
 	    std::unordered_map<std::string,int> mapHobbies;
 
-		JsonObject parseObject(const std::string& line);
 		std::string getAveAgePerCty();
 		std::string getAveNumOfFriendsPerCty();
 		std::string getTopFriendsUserPerCty();
 		std::string getMostCommonName();
 		std::string getMostCommonHobby();
 	public:
-		RestClient() = delete;
-		RestClient(const std::string& endpoint, const bool& verbosity);
+		RestClient();
+		RestClient(const std::string& endpoint);
 		~RestClient();
 		
+		//http client gets the json from the endpoint
 		std::string getJson();
+		// json is parsed and the memeber maps are updated
 		void parseJson(const std::string& responseBody);
-		void validateJson(const std::string& responseBody);
+		// calculates query results from maps and returns result
 		std::string getQueryResults(Query query);
-
-
-
-
-
-	
-
-
 };
-
 
 #endif

@@ -4,8 +4,8 @@
 #include <string>
 #include <sstream> 
 #include <stdexcept>
-
-RestClient::RestClient(const std::string &endpoint, const bool& verbosity) : endpoint(endpoint), verbosity(verbosity){};
+RestClient::RestClient() : endpoint("http://test.brightsign.io:3000"){};
+RestClient::RestClient(const std::string &endpoint) : endpoint(endpoint){};
 RestClient::~RestClient(){}
 
 std::string RestClient::getJson()
@@ -37,20 +37,17 @@ std::string RestClient::getJson()
 
 void RestClient::parseJson(const std::string &responseBody)
 {
-	struct JsonObject jo;
-	std::stringstream ss(responseBody); // Create a stringstream from the string
+	std::stringstream ss(responseBody);
 	std::string line;
-
-	for (unsigned int i = 0; i < 20; i++)
+	unsigned int line_num = 1;
+	//Parse line by line
+	while (std::getline(ss, line))
 	{
-		std::getline(ss, line);
-		//std::cout << line << std::endl << std::endl;
 		nlohmann::json j_user;
 		try{
 			j_user = nlohmann::json::parse(line);
 		} catch (nlohmann::json::parse_error& e){
-			std::cout << "Error Parsing Json on line: " << i+1 << std::endl << line << std::endl;
-			std::exit(1);
+			throw std::runtime_error( "Error Parsing Json on line: " + std::to_string(line_num) + "\n" + line);
 		}
 		// Aggregate City Data
 		if (mapCityData.find(j_user["city"]) == mapCityData.end())
@@ -73,8 +70,7 @@ void RestClient::parseJson(const std::string &responseBody)
 			{
 				mapCityData[j_user["city"]].friendsMax = j_user["friends"].size();
 				mapCityData[j_user["city"]].userWithMostFriends = j_user["name"];
-			//	mapCityData[j_user["city"]].idWithMostFriends = j_user["id"];
-
+				mapCityData[j_user["city"]].idWithMostFriends = j_user["id"];
 			}
 		}
 		// Map Name and frequency
@@ -101,6 +97,7 @@ void RestClient::parseJson(const std::string &responseBody)
 				}
 			}
 		}
+		line_num++;
 	}
 	return;
 }
@@ -111,7 +108,6 @@ std::string RestClient::getAveAgePerCty()
 	for (const auto &cityData : mapCityData)
 	{
 		float averageAge = static_cast<float>(cityData.second.ageSum) / cityData.second.numOfUsers;
-		//std::cout << std::fixed << std::setprecision(2) << "Average Age: " << averageAge << std::endl;
 		j_answer.push_back({"city", cityData.first, "average age", averageAge});
 	}
 	return j_answer.dump();
@@ -122,7 +118,6 @@ std::string RestClient::getAveNumOfFriendsPerCty()
 	for (const auto &cityData : mapCityData)
 	{
 		float averageNumFriends = static_cast<float>(cityData.second.friendsSum) / cityData.second.numOfUsers;
-		//std::cout << std::fixed << std::setprecision(2) << "Average Friend: " << averageNumFriends << std::endl;
 		j_answer.push_back({"city", cityData.first, "average num friends", averageNumFriends});
 	}
 	return j_answer.dump();
@@ -132,8 +127,7 @@ std::string RestClient::getTopFriendsUserPerCty()
 	nlohmann::json j_answer;
 	for (const auto &cityData : mapCityData)
 	{ 
-		//j_answer.push_back({"city", cityData.first, "id", cityData.second.idWithMostFriends,"name", cityData.second.userWithMostFriends});
-		j_answer.push_back({"city", cityData.first,"name", cityData.second.userWithMostFriends});
+		j_answer.push_back({"city", cityData.first,"id", cityData.second.idWithMostFriends,"name", cityData.second.userWithMostFriends});
 	}
 	return j_answer.dump();
 }
@@ -146,6 +140,9 @@ std::string RestClient::getMostCommonName()
 		if (firstName.second > max){
 			max = firstName.second;
 			keys.clear();
+			keys.push_back(firstName.first);
+		}
+		else if (firstName.second == max){
 			keys.push_back(firstName.first);
 		}
 	}
@@ -164,6 +161,9 @@ std::string RestClient::getMostCommonHobby()
 		if (hobby.second > max){
 			max = hobby.second;
 			keys.clear();
+			keys.push_back(hobby.first);
+		}
+		else if (hobby.second == max){
 			keys.push_back(hobby.first);
 		}
 	}
@@ -197,7 +197,5 @@ std::string RestClient::getQueryResults(Query query){
 			break;
 	}
 	return results;
-
-
 }
 

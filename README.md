@@ -32,6 +32,15 @@ Outputs:
 [["name","Michael"]]
 ```
 
+## Unit Tests
+test.cpp contains unit tests
+
+To run the tests:
+``` 
+./test
+```
+
+
 ## External Libraries Used
 ### httplib
 https://github.com/yhirose/cpp-httplib
@@ -43,6 +52,11 @@ https://github.com/nlohmann/json
 - Single Header
 - JSON objects
 - JSON parser
+
+### acutest
+- Single Header
+- Provides google like unit tests
+
 
 ### Considerations
 - No need to reinvent the wheel. I opted out of using a custom parser and object to injest the JSON
@@ -59,7 +73,8 @@ The user object contains:
     - list of hobbies
 ## Security
 
-## Assumptions
+## Assumptions\
+- Calculating "the most common first name in all cities" does not include the friends names
 - Any calculation that requires the max of a parameter, will return multiple object if they all have the max.
 ---
 ---

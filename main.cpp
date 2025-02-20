@@ -9,19 +9,15 @@
 int main(int argc, char *argv[])
 {
     int opt;
-    bool verbose = false;
     std::string endpoint;
     unsigned int answerOptionCnt = 0;
     Query query = Query::NO_QUERY;
 
     // Parse command line options
-    while ((opt = getopt(argc, argv, "ve:h12345")) != -1)
+    while ((opt = getopt(argc, argv, "e:h12345")) != -1)
     {
         switch (opt)
         {
-        case 'v':
-            verbose = true;
-            break;
         case '1':
             answerOptionCnt++;
             query=Query::AVE_AGE_PER_CTY;
@@ -66,7 +62,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // Output the parsed options
+    // Check if arguments are correct
     if (endpoint.empty())
     {
         std::cout << "No endpoint specified.\n";
@@ -78,16 +74,28 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    RestClient restClient(endpoint,verbose);
+    //create rest client
+    RestClient restClient(endpoint);
+    //get data from endpoint
     std::string responseBody = restClient.getJson();
+
+
+    //////////////////////////
+    std::string filename = "my_file.txt"; // Or any filename you want
+    std::ofstream outputFile(filename); // Open the file for writing
+    if (outputFile.is_open()) {
+        outputFile << responseBody << std::endl; // Write the string to the file, std::endl adds a newline
+        outputFile.close(); // Close the file (important!)
+        std::cout << "String saved to " << filename << std::endl;
+    } else {
+        std::cerr << "Unable to open file: " << filename << std::endl;
+        return 1; // Indicate an error
+    }
+////////////////////////////////
+    //parse data and update private member data structures
     restClient.parseJson(responseBody);
+    //output the specified quiried results
     std::cout << restClient.getQueryResults(query);
-
-    // std::cout << client.getAveAgePerCty() << std::endl;
-    // std::cout << client.getAveNumOfFriendsPerCty() << std::endl;
-    // std::cout << client.getTopFriendsUserPerCty() << std::endl;
-    // std::cout << client.getMostCommonName() << std::endl;
-    // std::cout << client.getMostCommonHobby() << std::endl;
-
+    
     return 0;
 }
