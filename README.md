@@ -54,6 +54,7 @@ https://github.com/nlohmann/json
 - JSON parser
 
 ### acutest
+https://github.com/mity/acutest/
 - Single Header
 - Provides google like unit tests
 
@@ -73,7 +74,15 @@ The user object contains:
     - list of hobbies
 ## Security
 
-## Assumptions\
+- Consider using HTTPS instead of HTTP
+    - This would encrypt communication and protect data in transit
+- Consider using Authentication/Tokens to get data from the server
+- Consider implementing rate limiting
+    - restricts the number of requests a user or client can make to a server
+
+
+## Assumptions
+
 - Calculating "the most common first name in all cities" does not include the friends names
 - Any calculation that requires the max of a parameter, will return multiple object if they all have the max.
 ---
